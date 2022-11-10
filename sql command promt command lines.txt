@@ -1,0 +1,365 @@
+# Meesho project SQL
+
+
+MariaDB [Meesho]> create table account(acc_id int primary key auto_increment,
+    ->      Fullname varchar(29) not null,
+    ->      Phonenumber bigint(10) default (+91),
+    ->      EmailID varchar(55) not null,
+    ->      Gender varchar(34) not null,
+    ->      Language varchar(34) not null,
+    ->      Occupation varchar(34),
+    ->      Pincode int,
+    ->      city varchar(34) not null,
+    ->      State varchar(34) not null);
+Query OK, 0 rows affected (0.276 sec)
+
+
+MariaDB [Meesho]> desc account;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| acc_id      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| Fullname    | varchar(29) | NO   |     | NULL    |                |
+| Phonenumber | bigint(10)  | YES  |     | 91      |                |
+| EmailID     | varchar(55) | NO   |     | NULL    |                |
+| Gender      | varchar(34) | NO   |     | NULL    |                |
+| Language    | varchar(34) | NO   |     | NULL    |                |
+| Occupation  | varchar(34) | YES  |     | NULL    |                |
+| Pincode     | int(11)     | YES  |     | NULL    |                |
+| city        | varchar(34) | NO   |     | NULL    |                |
+| State       | varchar(34) | NO   |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+10 rows in set (0.014 sec)
+
+MariaDB [Meesho]> insert into Account(acc_id,Fullname,Phonenumber,EmailID,Gender,Language,Occupation,Pincode,City,State)
+    ->values
+    ->(1,'suresh','9988442255','suresh@gmail.com','Male','English','Student','600001','Banglore','karnataka');
+Query OK, 1 row affected (0.099 sec)
+
+MariaDB [Meesho]> select*from account;
++--------+----------+-------------+------------------+--------+----------+------------+---------+----------+-----------+
+| acc_id | Fullname | Phonenumber | EmailID          | Gender | Language | Occupation | Pincode | city     | State     |
++--------+----------+-------------+------------------+--------+----------+------------+---------+----------+-----------+
+|      1 | suresh   |  9988442255 | suresh@gmail.com | Male   | English  | Student    |  600001 | Banglore | karnataka |
++--------+----------+-------------+------------------+--------+----------+------------+---------+----------+-----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> create view address as select fullname,phonenumber,city,state from account;
+Query OK, 0 rows affected (0.085 sec)
+
+MariaDB [Meesho]> select*from address;
++----------+-------------+----------+-----------+
+| fullname | phonenumber | city     | state     |
++----------+-------------+----------+-----------+
+| suresh   |  9988442255 | Banglore | karnataka |
++----------+-------------+----------+-----------+
+1 row in set (0.060 sec)
+
+MariaDB [Meesho]> select('sign-in') as'  ' from dual;
++---------+
+|         |
++---------+
+| sign-in |
++---------+
+1 row in set, 1 warning (0.058 sec)
+
+
+MariaDB [Meesho]> create table productType(productID varchar(23) ,
+    ->      deptid int,
+    ->      producttype varchar(23),
+    ->      productprice int,
+    ->      discount int);
+Query OK, 0 rows affected (0.286 sec)
+
+MariaDB [Meesho]> desc producttype;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| product_type  | varchar(23) | NO   | PRI | NULL    |       |
+| dept_id       | int(11)     | YES  |     | NULL    |       |
+| product_id    | varchar(23) | YES  |     | NULL    |       |
+| product_price | int(11)     | YES  |     | NULL    |       |
+| discount      | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.018 sec)
+
+
+MariaDB [Meesho]> insert into producttype(product_ID,dept_id,product_type,product_price,discount)
+    ->      values
+    ->      ('jeweller sets','1002','jew001',1000,'10'),
+    ->      ('handbages','1002','hand002',5000,5),
+    ->      ('watches','1003','wat003',100000,20),
+    ->      ('Electronicitem','1004','Elect004','200000',25),
+    ->      ('Headbags','1005','Head005','2000',5),
+    ->      ('mobiles','1006','mob006',50000,10),
+    ->      ('shoes','1007','sho007','3000',22),
+    ->      ('belts','1008','bel008','200',2);
+Query OK, 8 rows affected (0.090 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+MariaDB [Meesho]> select*from producttype;
++--------------+---------+----------------+---------------+----------+
+| product_type | dept_id | product_id     | product_price | discount |
++--------------+---------+----------------+---------------+----------+
+| bel008       |    1008 | belts          |           200 |        2 |
+| Elect004     |    1004 | Electronicitem |        200000 |       25 |
+| hand002      |    1002 | handbages      |          5000 |        5 |
+| Head005      |    1005 | Headbags       |          2000 |        5 |
+| jew001       |    1002 | jeweller sets  |          1000 |       10 |
+| mob006       |    1006 | mobiles        |         50000 |       10 |
+| sho007       |    1007 | shoes          |          3000 |       22 |
+| wat003       |    1003 | watches        |        100000 |       20 |
++--------------+---------+----------------+---------------+----------+
+8 rows in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='belts';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| bel008       |    1008 | belts      |           200 |        2 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='electronicitem';
++--------------+---------+----------------+---------------+----------+
+| product_type | dept_id | product_id     | product_price | discount |
++--------------+---------+----------------+---------------+----------+
+| Elect004     |    1004 | Electronicitem |        200000 |       25 |
++--------------+---------+----------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='handbages';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| hand002      |    1002 | handbages  |          5000 |        5 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='headbags';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| Head005      |    1005 | Headbags   |          2000 |        5 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='jeweller sets';
++--------------+---------+---------------+---------------+----------+
+| product_type | dept_id | product_id    | product_price | discount |
++--------------+---------+---------------+---------------+----------+
+| jew001       |    1002 | jeweller sets |          1000 |       10 |
++--------------+---------+---------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='mobiles';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| mob006       |    1006 | mobiles    |         50000 |       10 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='shoes';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| sho007       |    1007 | shoes      |          3000 |       22 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.003 sec)
+
+MariaDB [Meesho]> select*from producttype
+    -> where product_id='watches';
++--------------+---------+------------+---------------+----------+
+| product_type | dept_id | product_id | product_price | discount |
++--------------+---------+------------+---------------+----------+
+| wat003       |    1003 | watches    |        100000 |       20 |
++--------------+---------+------------+---------------+----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> CREATE TABLE products(prodId VARCHAR(20) PRIMARY KEY,prodtypeid VARCHAR(20) NOT NULL,
+    -> supplierid VARCHAR(20) UNIQUE,productName VARCHAR(50) NOT NULL,brand VARCHAR(20)NOT NULL,
+    -> price INT NOT NULL,descr VARCHAR(100),CustReview INT CHECK(custReview<=5),
+    -> FOREIGN KEY (prodtypeid) REFERENCES productType(producttypeid));
+ERROR 1005 (HY000): Can't create table `meesho`.`products` (errno: 150 "Foreign key constraint is incorrectly formed")
+MariaDB [Meesho]> drop table producttype;
+Query OK, 0 rows affected (0.250 sec)
+
+MariaDB [Meesho]> create table productType(product_ID varchar(23) ,
+    ->      dept_id int,
+    ->      product_type varchar(23),
+    ->      product_price int,
+    ->      discount int);
+Query OK, 0 rows affected (0.265 sec)
+
+
+MariaDB [Meesho]> CREATE TABLE products(product_id VARCHAR(20) PRIMARY KEY,product_type VARCHAR(20) NOT NULL,
+    -> supplierid VARCHAR(20) UNIQUE,product_Name VARCHAR(50) NOT NULL,brand VARCHAR(20)NOT NULL,
+    -> price INT NOT NULL,descr VARCHAR(100),CustReview INT CHECK(custReview<=5),
+    -> FOREIGN KEY (product_type) REFERENCES productType(product_type));
+Query OK, 0 rows affected (0.702 sec)
+
+MariaDB [Meesho]> select*from products;
+Empty set (0.004 sec)
+
+MariaDB [Meesho]> desc products;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| product_id   | varchar(20)  | NO   | PRI | NULL    |       |
+| product_type | varchar(20)  | NO   | MUL | NULL    |       |
+| supplierid   | varchar(20)  | YES  | UNI | NULL    |       |
+| product_Name | varchar(50)  | NO   |     | NULL    |       |
+| brand        | varchar(20)  | NO   |     | NULL    |       |
+| price        | int(11)      | NO   |     | NULL    |       |
+| descr        | varchar(100) | YES  |     | NULL    |       |
+| CustReview   | int(11)      | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+8 rows in set (0.012 sec)
+
+MariaDB [Meesho]> insert into products(product_id,product_type,supplierid,product_name,brand,price,descr,custreview)
+    -> values
+    -> ('jewellery sets','jew001','JGJG6868','bangles','KDM','1000','colour:golden colour,metal:brass,waitless',4);
+Query OK, 1 row affected (0.075 sec)
+
+MariaDB [Meesho]> select*from products;
++----------------+--------------+------------+--------------+-------+-------+-------------------------------------------+------------+
+| product_id     | product_type | supplierid | product_Name | brand | price | descr                                     | CustReview |
++----------------+--------------+------------+--------------+-------+-------+-------------------------------------------+------------+
+| jewellery sets | jew001       | JGJG6868   | bangles      | KDM   |  1000 | colour:golden colour,metal:brass,waitless |          4 |
++----------------+--------------+------------+--------------+-------+-------+-------------------------------------------+------------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select('CHOOSE JEWELLER SETS RATING IS 4');
++----------------------------------+
+| CHOOSE JEWELLER SETS RATING IS 4 |
++----------------------------------+
+| CHOOSE JEWELLER SETS RATING IS 4 |
++----------------------------------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> CREATE TABLE ordersReview(orderid Varchar(20) PRIMARY KEY,acc_id INT NOT NULL ,supplierid VARCHAR(20)UNIQUE NOT NULL,
+    -> product_Id VARCHAR(20) UNIQUE NOT NULL,payment_Id VARCHAR(20) UNIQUE NOT NULL,orderDate Date NOT NULL,Qty INT DEFAULT (1),
+    -> FOREIGN KEY(acc_id) REFERENCES account(acc_id),FOREIGN KEY (supplierid) REFERENCES products(supplierid),
+    -> FOREIGN KEY(product_Id) REFERENCES products(Product_Id));
+Query OK, 0 rows affected (0.295 sec)
+
+MariaDB [Meesho]> desc ordersreview;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| orderid    | varchar(20) | NO   | PRI | NULL    |       |
+| acc_id     | int(11)     | NO   | MUL | NULL    |       |
+| supplierid | varchar(20) | NO   | UNI | NULL    |       |
+| product_Id | varchar(20) | NO   | UNI | NULL    |       |
+| payment_Id | varchar(20) | NO   | UNI | NULL    |       |
+| orderDate  | date        | NO   |     | NULL    |       |
+| Qty        | int(11)     | YES  |     | 1       |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.016 sec)
+
+MariaDB [Meesho]> insert into ordersreview(orderid,acc_id,supplierid,product_id,payment_id,orderdate,QTY)
+    -> values
+    -> ('6565-567',1,'JGJG6868','4440-6354-4677','2022-10-20',1);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+MariaDB [Meesho]> insert into ordersreview(orderid,acc_id,supplierid,product_id,payment_id,orderdate,QTY)
+    -> values
+    -> ('6565-567',1,'JGJG6868','jewellery sets','4440-6354-4677','2022-10-20',1);
+Query OK, 1 row affected (0.129 sec)
+
+MariaDB [Meesho]> select*from orderreviews;
+ERROR 1146 (42S02): Table 'meesho.orderreviews' doesn't exist
+MariaDB [Meesho]> select*from ordersreview;
++----------+--------+------------+----------------+----------------+------------+------+
+| orderid  | acc_id | supplierid | product_Id     | payment_Id     | orderDate  | Qty  |
++----------+--------+------------+----------------+----------------+------------+------+
+| 6565-567 |      1 | JGJG6868   | jewellery sets | 4440-6354-4677 | 2022-10-20 |    1 |
++----------+--------+------------+----------------+----------------+------------+------+
+1 row in set (0.001 sec)
+
+
+MariaDB [Meesho]> create table onlinepayment(payment_Id VARCHAR(20) PRIMARY KEY ,acc_id INT, cardNo BIGINT UNIQUE NOT NULL,validfrom YEAR,
+    -> validtill YEAR,FOREIGN KEY (payment_Id) REFERENCES ordersReview (payment_ID),FOREIGN KEY (acc_id) REFERENCES account(acc_id));
+Query OK, 0 rows affected (0.468 sec)
+
+MariaDB [Meesho]> desc onlinepayments;
+ERROR 1146 (42S02): Table 'meesho.onlinepayments' doesn't exist
+MariaDB [Meesho]> desc onlinepayment;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| payment_Id | varchar(20) | NO   | PRI | NULL    |       |
+| acc_id     | int(11)     | YES  | MUL | NULL    |       |
+| cardNo     | bigint(20)  | NO   | UNI | NULL    |       |
+| validfrom  | year(4)     | YES  |     | NULL    |       |
+| validtill  | year(4)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.015 sec)
+
+
+MariaDB [Meesho]> insert into onlinepayment(payment_id,acc_id,cardno,validfrom,validtill)
+    -> values
+    -> ('4440-6354-4677',1,457756464674567654,'2022','2025');
+Query OK, 1 row affected (0.106 sec)
+
+MariaDB [Meesho]> select*from onlinepayment;
++----------------+--------+--------------------+-----------+-----------+
+| payment_Id     | acc_id | cardNo             | validfrom | validtill |
++----------------+--------+--------------------+-----------+-----------+
+| 4440-6354-4677 |      1 | 457756464674567654 |      2022 |      2025 |
++----------------+--------+--------------------+-----------+-----------+
+1 row in set (0.001 sec)
+
+
+MariaDB [Meesho]> CREATE VIEW orderDetails AS
+    -> SELECT ordersReview.orderid,account.acc_id,ordersReview.product_Id,products.product_Name,products.brand,products.price,
+    -> account.fullname,account.phonenumber,account.pincode,account.city,account.state
+    -> FROM ((ordersReview INNER JOIN products ON ordersReview.product_Id=products.product_Id)
+    -> INNER JOIN account ON ordersReview.acc_id=account.acc_id);
+Query OK, 0 rows affected (0.085 sec)
+
+MariaDB [Meesho]> select*from orderdetails;
++----------+--------+----------------+--------------+-------+-------+----------+-------------+---------+----------+-----------+
+| orderid  | acc_id | product_Id     | product_Name | brand | price | fullname | phonenumber | pincode | city     | state     |
++----------+--------+----------------+--------------+-------+-------+----------+-------------+---------+----------+-----------+
+| 6565-567 |      1 | jewellery sets | bangles      | KDM   |  1000 | suresh   |  9988442255 |  600001 | Banglore | karnataka |
++----------+--------+----------------+--------------+-------+-------+----------+-------------+---------+----------+-----------+
+1 row in set (0.003 sec)
+
+MariaDB [Meesho]> select p.product_id,p.product_name,p.price as "paying amount",
+    -> o.orderdate from products p
+    -> inner join ordersreview o
+    -> on o.product_id=p.product_id;
++----------------+--------------+---------------+------------+
+| product_id     | product_name | paying amount | orderdate  |
++----------------+--------------+---------------+------------+
+| jewellery sets | bangles      |          1000 | 2022-10-20 |
++----------------+--------------+---------------+------------+
+1 row in set (0.003 sec)
+
+MariaDB [Meesho]> select*fron onlinepayment;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'fron onlinepayment' at line 1
+MariaDB [Meesho]> select*from onlinepayment;
++----------------+--------+--------------------+-----------+-----------+
+| payment_Id     | acc_id | cardNo             | validfrom | validtill |
++----------------+--------+--------------------+-----------+-----------+
+| 4440-6354-4677 |      1 | 457756464674567654 |      2022 |      2025 |
++----------------+--------+--------------------+-----------+-----------+
+1 row in set (0.001 sec)
+
+MariaDB [Meesho]> select ("payment successfull completed") as 'runing...' from dual;
++-------------------------------+
+| runing...                     |
++-------------------------------+
+| payment successfull completed |
++-------------------------------+
+1 row in set (0.001 sec)
+
+
